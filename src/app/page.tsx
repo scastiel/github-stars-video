@@ -37,11 +37,7 @@ export default async function Home({
             </CardContent>
           </>
         ) : (
-          <CompositionPlayer
-            fps={60}
-            durationInFrames={180}
-            inputProps={inputProps}
-          />
+          <CompositionPlayer inputProps={inputProps} />
         )}
       </Card>
     </main>

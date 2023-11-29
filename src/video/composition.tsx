@@ -1,6 +1,5 @@
 import {
   AbsoluteFill,
-  CalculateMetadataFunction,
   Easing,
   Img,
   interpolate,
@@ -13,14 +12,6 @@ import { z } from 'zod'
 import { bookPrStargazers } from './fixtures'
 
 export const schema = z.object({
-  animationDurationInSeconds: z.number(),
-  fps: z.number(),
-  stargazerAvatarSize: z.number(),
-  stargazerAvatarGap: z.number(),
-  starSize: z.number(),
-  durationInSeconds: z.number(),
-  videoWidth: z.number(),
-  videoHeight: z.number(),
   user: z.string(),
   userAvatarUrl: z.string(),
   repository: z.string(),
@@ -30,15 +21,15 @@ export const schema = z.object({
 
 export type Props = z.infer<typeof schema>
 
+export const animationDurationInSeconds = 3
+export const width = 1280
+export const height = 720
+export const fps = 60
+const stargazerAvatarSize = 128
+const stargazerAvatarGap = 16
+const starSize = 32
+
 export const defaultProps: Props = {
-  animationDurationInSeconds: 3,
-  fps: 60,
-  stargazerAvatarSize: 128,
-  stargazerAvatarGap: 16,
-  starSize: 32,
-  durationInSeconds: 3,
-  videoWidth: 1280,
-  videoHeight: 720,
   user: 'scastiel',
   userAvatarUrl: 'https://avatars.githubusercontent.com/u/301948?v=4',
   repository: 'book-pr',
@@ -51,11 +42,7 @@ export function GitHubStarsComposition({
   userAvatarUrl,
   repository,
   stargazers,
-  stargazerAvatarGap,
-  stargazerAvatarSize,
   stars,
-  animationDurationInSeconds,
-  starSize,
 }: Props) {
   return (
     <AbsoluteFill className="bg-white">
@@ -64,36 +51,18 @@ export function GitHubStarsComposition({
         userAvatarUrl={userAvatarUrl}
         repository={repository}
       />
-      <UserAvatars
-        stargazers={stargazers}
-        stargazerAvatarGap={stargazerAvatarGap}
-        stargazerAvatarSize={stargazerAvatarSize}
-        animationDurationInSeconds={animationDurationInSeconds}
-        starSize={starSize}
-      />
-      <StarCount
-        stars={stars}
-        stargazers={stargazers}
-        animationDurationInSeconds={animationDurationInSeconds}
-      />
+      <UserAvatars stargazers={stargazers} />
+      <StarCount stars={stars} stargazers={stargazers} />
     </AbsoluteFill>
   )
-}
-
-function useProps_(): Props {
-  const { props } = useVideoConfig()
-  console.log('props', props)
-  return schema.parse({ ...defaultProps, ...props })
 }
 
 function StarCount({
   stars,
   stargazers,
-  animationDurationInSeconds,
 }: {
   stars: number
   stargazers: Props['stargazers']
-  animationDurationInSeconds: number
 }) {
   const frame = useCurrentFrame()
   const { fps } = useVideoConfig()
@@ -120,19 +89,7 @@ function StarCount({
   )
 }
 
-function UserAvatars({
-  stargazerAvatarSize,
-  stargazerAvatarGap,
-  stargazers,
-  animationDurationInSeconds,
-  starSize,
-}: {
-  stargazerAvatarSize: number
-  stargazerAvatarGap: number
-  stargazers: Props['stargazers']
-  animationDurationInSeconds: number
-  starSize: number
-}) {
+function UserAvatars({ stargazers }: { stargazers: Props['stargazers'] }) {
   return (
     <div
       className="relative h-48"
@@ -145,11 +102,7 @@ function UserAvatars({
           key={index}
           avatarUrl={avatarUrl}
           index={index}
-          animationDurationInSeconds={animationDurationInSeconds}
-          stargazerAvatarGap={stargazerAvatarGap}
-          stargazerAvatarSize={stargazerAvatarSize}
           stargazers={stargazers}
-          starSize={starSize}
         />
       ))}
     </div>
@@ -184,18 +137,10 @@ function RepositoryInformation({
 function User({
   avatarUrl,
   index,
-  stargazerAvatarSize,
-  stargazerAvatarGap,
-  animationDurationInSeconds,
   stargazers,
-  starSize,
 }: {
   avatarUrl: string
   index: number
-  stargazerAvatarSize: number
-  stargazerAvatarGap: number
-  animationDurationInSeconds: number
-  starSize: number
   stargazers: Props['stargazers']
 }) {
   const { fps, width } = useVideoConfig()
@@ -220,43 +165,22 @@ function User({
           [-fps * 0.5, animationDurationInSeconds * fps - fps * 2],
         )}
       >
-        <UserSequence
-          avatarUrl={avatarUrl}
-          stargazerAvatarSize={stargazerAvatarSize}
-          starSize={starSize}
-        />
+        <UserSequence avatarUrl={avatarUrl} />
       </Sequence>
     </div>
   )
 }
 
-export function UserSequence({
-  avatarUrl,
-  stargazerAvatarSize,
-  starSize,
-}: {
-  avatarUrl: string
-  stargazerAvatarSize: number
-  starSize: number
-}) {
+export function UserSequence({ avatarUrl }: { avatarUrl: string }) {
   return (
     <>
-      <AnimatedUserAvatar
-        avatarUrl={avatarUrl}
-        stargazerAvatarSize={stargazerAvatarSize}
-      />
+      <AnimatedUserAvatar avatarUrl={avatarUrl} />
       <AnimatedStar starSize={starSize} />
     </>
   )
 }
 
-function AnimatedUserAvatar({
-  avatarUrl,
-  stargazerAvatarSize,
-}: {
-  avatarUrl: string
-  stargazerAvatarSize: number
-}) {
+function AnimatedUserAvatar({ avatarUrl }: { avatarUrl: string }) {
   const { fps } = useVideoConfig()
   const frame = useCurrentFrame()
   const size = Math.round(
@@ -308,15 +232,4 @@ function Star({ starSize }: { starSize: number }) {
       <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
     </svg>
   )
-}
-
-export const calculateMetadata: CalculateMetadataFunction<Props> = ({
-  props: { durationInSeconds, videoWidth, videoHeight, fps },
-}) => {
-  return {
-    durationInFrames: durationInSeconds * fps,
-    width: videoWidth,
-    height: videoHeight,
-    fps,
-  }
 }

@@ -2,37 +2,35 @@
 import {
   GitHubStarsComposition,
   Props,
+  animationDurationInSeconds,
   defaultProps,
-  schema,
+  fps,
+  height,
+  width,
 } from '@/video/composition'
 import useSize from '@react-hook/size'
 import { Player } from '@remotion/player'
 import { useRef } from 'react'
 
 export function CompositionPlayer({
-  fps,
-  durationInFrames,
   inputProps,
 }: {
-  fps: number
-  durationInFrames: number
   inputProps?: Partial<Props>
 }) {
   const divRef = useRef<HTMLDivElement>(null)
-  const [width, height] = useSize(divRef)
+  const [divWidth, divHeight] = useSize(divRef)
 
   return (
     <div className="w-full h-full" ref={divRef}>
-      {width !== 0 && height !== 0 && (
+      {divWidth !== 0 && divHeight !== 0 && (
         <Player
           style={{ width: '100%', height: '100%' }}
           component={GitHubStarsComposition}
-          compositionWidth={1280}
-          compositionHeight={720}
+          compositionWidth={width}
+          compositionHeight={height}
           fps={fps}
-          durationInFrames={durationInFrames}
+          durationInFrames={(animationDurationInSeconds + 1) * fps}
           inputProps={{ ...defaultProps, ...inputProps }}
-          schema={schema}
           controls
           loop
           showVolumeControls={false}
