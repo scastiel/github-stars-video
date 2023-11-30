@@ -57,7 +57,7 @@ async function RepositoryResult({ repository }: { repository: string }) {
               <strong>{repository}</strong>) does not exist.
             </p>
             <Image
-              src="/lost.gif"
+              src="/github-stars/lost.gif"
               alt=""
               width={198}
               height={187}
