@@ -1,10 +1,31 @@
 import { Button } from '@/components/ui/button'
+import { env } from '@/lib/env'
 import { Code2, ExternalLink } from 'lucide-react'
 import type { Metadata } from 'next'
 import './globals.css'
 
 export const metadata: Metadata = {
+  metadataBase: new URL(env.NEXT_PUBLIC_BASE_URL),
   title: 'GitHub Stars Video',
+  description:
+    'Animate your GitHub Stars, boost engagement with your audience.',
+  openGraph: {
+    title: 'GitHub Stars Video',
+    description:
+      'Animate your GitHub Stars, boost engagement with your audience.',
+    images: `/banner.png`,
+    type: 'website',
+    url: '/',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    creator: '@scastiel',
+    site: '@scastiel',
+    images: `/banner.png`,
+    title: 'GitHub Stars Video',
+    description:
+      'Animate your GitHub Stars, boost engagement with your audience.',
+  },
 }
 
 export default function RootLayout({
