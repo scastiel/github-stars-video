@@ -9,6 +9,7 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Loader2 } from 'lucide-react'
+import Image from 'next/image'
 import { Suspense } from 'react'
 import { getGithubStarsInfo } from '../lib/github-stars-info'
 
@@ -45,7 +46,7 @@ async function RepositoryResult({ repository }: { repository: string }) {
   return (
     <>
       {inputProps === null ? (
-        <ResultCard>
+        <ResultCard className="relative">
           <CardHeader>
             <CardTitle>Error</CardTitle>
             <CardDescription>Repository not found</CardDescription>
@@ -55,6 +56,13 @@ async function RepositoryResult({ repository }: { repository: string }) {
               It looks like the repository you entered (
               <strong>{repository}</strong>) does not exist.
             </p>
+            <Image
+              src="/lost.gif"
+              alt=""
+              width={198}
+              height={187}
+              className="absolute bottom-0 left-1/2 -translate-x-1/2"
+            />
           </CardContent>
         </ResultCard>
       ) : (

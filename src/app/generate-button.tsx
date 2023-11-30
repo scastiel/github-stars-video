@@ -70,7 +70,7 @@ export function GenerateButton({ inputProps }: { inputProps: Partial<Props> }) {
         </>
       ) : (
         <>
-          <FileVideo className="w-4 h-4 mr-2" /> Generate video
+          <FileVideo className="w-4 h-4 mr-2" /> Export MP4 video
         </>
       )}
     </Button>
