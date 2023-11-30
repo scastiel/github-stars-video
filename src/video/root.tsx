@@ -2,12 +2,11 @@ import { Composition } from 'remotion'
 import {
   GitHubStarsComposition,
   animationDurationInSeconds,
-  defaultProps,
   fps,
   height,
-  schema,
   width,
 } from './composition'
+import { defaultProps, schema } from './schema'
 
 export const RemotionRoot: React.FC = () => {
   return (

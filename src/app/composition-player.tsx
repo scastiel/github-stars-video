@@ -1,13 +1,12 @@
 'use client'
 import {
   GitHubStarsComposition,
-  Props,
   animationDurationInSeconds,
-  defaultProps,
   fps,
   height,
   width,
 } from '@/video/composition'
+import { Props, defaultProps } from '@/video/schema'
 import useSize from '@react-hook/size'
 import { Player } from '@remotion/player'
 import { useRef } from 'react'
@@ -15,7 +14,7 @@ import { useRef } from 'react'
 export function CompositionPlayer({
   inputProps,
 }: {
-  inputProps?: Partial<Props>
+  inputProps: Partial<Props>
 }) {
   const divRef = useRef<HTMLDivElement>(null)
   const [divWidth, divHeight] = useSize(divRef)

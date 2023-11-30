@@ -7,13 +7,15 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "remotion-studio": "remotion studio src/video/index.ts"
+    "remotion-studio": "remotion studio src/video/index.ts",
+    "deploy-composition": "remotion lambda sites create src/video/index.ts --site-name=my-video"
   },
   "dependencies": {
     "@octokit/rest": "^20.0.2",
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-slot": "^1.0.2",
     "@react-hook/size": "^2.1.2",
+    "@remotion/lambda": "4.0.75",
     "@remotion/player": "4.0.75",
     "@remotion/tailwind": "4.0.75",
     "@total-typescript/ts-reset": "^0.5.1",

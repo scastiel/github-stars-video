@@ -8,18 +8,7 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from 'remotion'
-import { z } from 'zod'
-import { bookPrStargazers } from './fixtures'
-
-export const schema = z.object({
-  user: z.string(),
-  userAvatarUrl: z.string(),
-  repository: z.string(),
-  stars: z.number(),
-  stargazers: z.array(z.string()),
-})
-
-export type Props = z.infer<typeof schema>
+import { Props } from './schema'
 
 export const animationDurationInSeconds = 3
 export const width = 1280
@@ -28,14 +17,6 @@ export const fps = 60
 const stargazerAvatarSize = 128
 const stargazerAvatarGap = 16
 const starSize = 32
-
-export const defaultProps: Props = {
-  user: 'scastiel',
-  userAvatarUrl: 'https://avatars.githubusercontent.com/u/301948?v=4',
-  repository: 'book-pr',
-  stars: 143,
-  stargazers: bookPrStargazers.slice(0, 20).map((sg) => sg.avatar_url),
-}
 
 export function GitHubStarsComposition({
   user,

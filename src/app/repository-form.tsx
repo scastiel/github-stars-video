@@ -1,14 +1,25 @@
+'use client'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { useRouter } from 'next/navigation'
 
 export function RepositoryForm({
   initialRepository,
 }: {
-  initialRepository?: string
+  initialRepository: string
 }) {
+  const router = useRouter()
+
   return (
-    <form className="flex items-end gap-2">
+    <form
+      className="flex items-end gap-2"
+      onSubmit={(event) => {
+        event.preventDefault()
+        const formData = new FormData(event.target as HTMLFormElement)
+        router.push(`/?repository=${formData.get('repository')}`)
+      }}
+    >
       <div className="flex flex-col gap-2">
         <Label htmlFor="repository">Repository</Label>
         <Input
