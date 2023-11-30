@@ -2,6 +2,7 @@
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { usePlausible } from 'next-plausible'
 import { useRouter } from 'next/navigation'
 
 export function RepositoryForm({
@@ -10,6 +11,7 @@ export function RepositoryForm({
   initialRepository: string
 }) {
   const router = useRouter()
+  const plausible = usePlausible()
 
   return (
     <form
@@ -17,7 +19,9 @@ export function RepositoryForm({
       onSubmit={(event) => {
         event.preventDefault()
         const formData = new FormData(event.target as HTMLFormElement)
-        router.push(`/?repository=${formData.get('repository')}`)
+        const repository = formData.get('repository')
+        plausible('Change repository', { props: { repository } })
+        router.push(`/?repository=${repository}`)
       }}
     >
       <div className="flex-1 flex flex-col gap-2">

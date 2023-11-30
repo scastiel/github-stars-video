@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button'
 import { delay } from '@/lib/utils'
 import { Props } from '@/video/schema'
 import { Download, FileVideo, Loader2 } from 'lucide-react'
+import { usePlausible } from 'next-plausible'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 
@@ -17,6 +18,7 @@ type State =
 export function GenerateButton({ inputProps }: { inputProps: Partial<Props> }) {
   const [state, setState] = useState<State>({ type: 'initial' })
   const router = useRouter()
+  const plausible = usePlausible()
 
   if (state.type === 'done') {
     return (
@@ -39,6 +41,11 @@ export function GenerateButton({ inputProps }: { inputProps: Partial<Props> }) {
           setState({ type: 'pending' })
           const { renderId, bucketName } = await generateVideo(inputProps)
           setState({ type: 'started', renderId, bucketName })
+          plausible('Export video', {
+            props: {
+              repository: `${inputProps.user}/${inputProps.repository}`,
+            },
+          })
           do {
             await delay(5000)
             const result = await getVideoGenerationProgress(
