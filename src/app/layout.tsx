@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button'
 import { env } from '@/lib/env'
 import { Code2, ExternalLink } from 'lucide-react'
 import type { Metadata } from 'next'
+import PlausibleProvider from 'next-plausible'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -35,6 +36,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <PlausibleProvider
+        domain="scastiel.dev/github-stars"
+        trackOutboundLinks
+      />
       <body className="min-h-[100dvh] flex flex-col">
         <header className="p-2 flex justify-end">
           <Button variant="ghost" asChild>

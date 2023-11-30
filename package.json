@@ -23,6 +23,7 @@
     "clsx": "^2.0.0",
     "lucide-react": "^0.294.0",
     "next": "14.0.3",
+    "next-plausible": "^3.12.0",
     "react": "^18",
     "react-dom": "^18",
     "remotion": "4.0.75",
