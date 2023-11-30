@@ -1,10 +1,11 @@
+import { env } from '@/lib/env'
 import { Props } from '@/video/schema'
 import { Octokit } from '@octokit/rest'
 
 export async function getGithubStarsInfo(
   repository: string,
 ): Promise<Partial<Props> | null> {
-  const octokit = new Octokit({ auth: process.env.GITHUB_ACCESS_TOKEN! })
+  const octokit = new Octokit({ auth: env.GITHUB_ACCESS_TOKEN })
   const [user, repo] = repository.split('/')
   try {
     const {

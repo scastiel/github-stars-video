@@ -1,4 +1,5 @@
 'use server'
+import { env } from '@/lib/env'
 import { defaultProps, schema } from '@/video/schema'
 
 import { getRenderProgress, renderMediaOnLambda } from '@remotion/lambda/client'
@@ -10,8 +11,8 @@ export async function generateVideo(inputProps: unknown) {
   )
   const { renderId, bucketName } = await renderMediaOnLambda({
     region: 'us-east-1',
-    functionName: process.env.REMOTION_AWS_FUNCTION_NAME!,
-    serveUrl: process.env.REMOTION_SERVE_URL!,
+    functionName: env.REMOTION_AWS_FUNCTION_NAME,
+    serveUrl: env.REMOTION_SERVE_URL,
     composition: 'GitHubStars',
     inputProps: props,
     codec: 'h264',
@@ -26,7 +27,7 @@ export async function getVideoGenerationProgress(
   'use server'
   const { done, errors, outputFile } = await getRenderProgress({
     region: 'us-east-1',
-    functionName: process.env.REMOTION_AWS_FUNCTION_NAME!,
+    functionName: env.REMOTION_AWS_FUNCTION_NAME,
     renderId,
     bucketName,
   })

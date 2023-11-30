@@ -1,3 +1,4 @@
+import { env } from '@/lib/env'
 import { getRenderProgress } from '@remotion/lambda/client'
 import { NextResponse } from 'next/server'
 
@@ -10,7 +11,7 @@ export async function GET(req: Request) {
 
   const { outputFile } = await getRenderProgress({
     region: 'us-east-1',
-    functionName: process.env.REMOTION_AWS_FUNCTION_NAME!,
+    functionName: env.REMOTION_AWS_FUNCTION_NAME,
     renderId,
     bucketName,
   })
