@@ -59,7 +59,7 @@ function StarCount({
   )
 
   return (
-    <div className="flex-1 text-right p-16 text-[128px]">
+    <div className="text-right px-16 pb-16 text-[128px]">
       <strong className="tabular-nums">
         {starsToDisplay.toLocaleString('en-US', { useGrouping: true })}
       </strong>
@@ -70,7 +70,7 @@ function StarCount({
 
 function UserAvatars({ stargazers }: { stargazers: Props['stargazers'] }) {
   return (
-    <div className="relative h-48">
+    <div className="relative flex-1">
       {stargazers.map((avatarUrl, index) => (
         <User
           key={index}
@@ -93,17 +93,17 @@ function RepositoryInformation({
   repository: string
 }) {
   return (
-    <div className="p-16 text-[72px] flex items-center gap-8">
-      <span className="flex items-center gap-6">
+    <div className="p-16 text-[72px] whitespace-nowrap overflow-hidden text-ellipsis">
+      <span>
         <Img
           src={userAvatarUrl}
           alt={user}
-          style={{ width: '1.2em', height: '1.2em' }}
-          className="rounded-full"
+          className="rounded-full inline mr-[0.25em] w-[1.2em] h-[1.2em] mb-3"
         />
         {user}
       </span>
-      <span className="opacity-30">/</span> <strong>{repository}</strong>
+      <span className="opacity-30 mx-[0.25em]">/</span>
+      <strong>{repository}</strong>
     </div>
   )
 }
