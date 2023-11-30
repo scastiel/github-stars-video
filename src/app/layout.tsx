@@ -1,3 +1,5 @@
+import { Button } from '@/components/ui/button'
+import { Code2, ExternalLink } from 'lucide-react'
 import type { Metadata } from 'next'
 import './globals.css'
 
@@ -12,7 +14,50 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="min-h-[100dvh] flex flex-col">{children}</body>
+      <body className="min-h-[100dvh] flex flex-col">
+        <header className="p-2 flex justify-end">
+          <Button variant="ghost" asChild>
+            <a
+              href="https://github.com/scastiel/github-stars-video"
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              <ExternalLink className="w-4 h-4 mr-2" />
+              GitHub
+            </a>
+          </Button>
+        </header>
+        {children}
+        <div className="p-4 w-full max-w-md mx-auto">
+          <a
+            href="https://codebit.xyz"
+            target="_blank"
+            rel="noreferrer noopener"
+            className="block rounded p-4 text-sm text-center text-slate-600 [&_strong]:text-black mb-12 border bg-gradient-to-br from-slate-100 to-slate-200"
+          >
+            Would you like to create animated code videos?
+            <br />
+            Check out our project{' '}
+            <strong>
+              <Code2 className="inline w-4 h-4 -mt-0.5" /> CodeBit
+            </strong>
+          </a>
+        </div>
+        <footer className="p-2 text-center text-sm [&_a]:underline">
+          Created by{' '}
+          <a
+            href="https://scastiel.dev"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            Sebastien Castiel
+          </a>
+          .<br />
+          <small className="text-slate-400">
+            Not endorsed or affiliated with GitHub.
+          </small>
+        </footer>
+      </body>
     </html>
   )
 }

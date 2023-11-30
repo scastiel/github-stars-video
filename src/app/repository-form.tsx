@@ -36,7 +36,9 @@ export function RepositoryForm({
         />
       </div>
       <div className="flex justify-center">
-        <Button type="submit">Submit</Button>
+        <Button variant="outline" type="submit">
+          Submit
+        </Button>
       </div>
     </form>
   )
