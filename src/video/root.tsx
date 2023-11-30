@@ -17,7 +17,7 @@ export const RemotionRoot: React.FC = () => {
         fps={fps}
         width={width}
         height={height}
-        durationInFrames={animationDurationInSeconds + fps}
+        durationInFrames={(animationDurationInSeconds + 1) * fps}
         defaultProps={defaultProps}
         schema={schema}
       />

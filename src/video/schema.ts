@@ -16,5 +16,5 @@ export const defaultProps: Props = {
   userAvatarUrl: 'https://avatars.githubusercontent.com/u/301948?v=4',
   repository: 'book-pr',
   stars: 143,
-  stargazers: bookPrStargazers.slice(0, 20).map((sg) => sg.avatar_url),
+  stargazers: bookPrStargazers.slice(0, 50).map((sg) => sg.avatar_url),
 }

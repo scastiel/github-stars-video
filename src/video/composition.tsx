@@ -3,8 +3,6 @@ import {
   Easing,
   Img,
   interpolate,
-  Sequence,
-  spring,
   useCurrentFrame,
   useVideoConfig,
 } from 'remotion'
@@ -72,12 +70,7 @@ function StarCount({
 
 function UserAvatars({ stargazers }: { stargazers: Props['stargazers'] }) {
   return (
-    <div
-      className="relative h-48"
-      style={{
-        width: stargazers.length * (stargazerAvatarSize + stargazerAvatarGap),
-      }}
-    >
+    <div className="relative h-48">
       {stargazers.map((avatarUrl, index) => (
         <User
           key={index}
@@ -128,70 +121,33 @@ function User({
   const frame = useCurrentFrame()
   const offset =
     stargazerAvatarGap + index * (stargazerAvatarSize + stargazerAvatarGap)
-  const left =
-    offset +
-    interpolate(
-      frame,
-      [0, animationDurationInSeconds * fps],
-      [0, -stargazers.length * stargazerAvatarSize + (width * 2) / 3],
-      { extrapolateRight: 'clamp', easing: Easing.elastic(1.5) },
-    )
+  const left = interpolate(
+    frame,
+    [0, animationDurationInSeconds * fps],
+    [
+      offset,
+      offset -
+        stargazers.length * (stargazerAvatarSize + stargazerAvatarGap) +
+        (width * 3) / 4,
+    ],
+    { extrapolateRight: 'clamp', easing: Easing.elastic(1) },
+  )
   return (
     <div className="absolute top-0 flex flex-col" style={{ left }}>
-      <Sequence
-        layout="none"
-        from={interpolate(
-          index,
-          [0, stargazers.length],
-          [-fps * 0.5, animationDurationInSeconds * fps - fps * 2],
-        )}
+      <div
+        className="flex justify-center items-center"
+        style={{ width: stargazerAvatarSize, height: stargazerAvatarSize }}
       >
-        <UserSequence avatarUrl={avatarUrl} />
-      </Sequence>
-    </div>
-  )
-}
-
-export function UserSequence({ avatarUrl }: { avatarUrl: string }) {
-  return (
-    <>
-      <AnimatedUserAvatar avatarUrl={avatarUrl} />
-      <AnimatedStar starSize={starSize} />
-    </>
-  )
-}
-
-function AnimatedUserAvatar({ avatarUrl }: { avatarUrl: string }) {
-  const { fps } = useVideoConfig()
-  const frame = useCurrentFrame()
-  const size = Math.round(
-    stargazerAvatarSize * spring({ fps, frame, config: { stiffness: 100 } }),
-  )
-  return (
-    <div
-      className="flex justify-center items-center"
-      style={{ width: stargazerAvatarSize, height: stargazerAvatarSize }}
-    >
-      <Img
-        className="shadow-xl rounded-full"
-        src={avatarUrl}
-        width={size}
-        height={size}
-      />
-    </div>
-  )
-}
-
-function AnimatedStar({ starSize }: { starSize: number }) {
-  const { fps } = useVideoConfig()
-  const frame = useCurrentFrame()
-  const size = spring({ fps, frame, config: { stiffness: 100 } })
-  return (
-    <div
-      className="flex justify-center mt-4"
-      style={{ transform: `scale(${size})` }}
-    >
-      <Star starSize={starSize} />
+        <Img
+          className="shadow-xl rounded-full"
+          src={avatarUrl}
+          width={stargazerAvatarSize}
+          height={stargazerAvatarSize}
+        />
+      </div>
+      <div className="flex justify-center mt-4">
+        <Star starSize={starSize} />
+      </div>
     </div>
   )
 }
