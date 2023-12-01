@@ -26,7 +26,7 @@ export function GenerateButton({
 
   if (inputProps && state.type === 'done') {
     return (
-      <form action="/download" method="GET">
+      <form action="/github-stars/download" method="GET">
         <input type="hidden" name="renderId" value={state.renderId} />
         <input type="hidden" name="bucketName" value={state.bucketName} />
         <input type="hidden" name="user" value={inputProps.user} />
