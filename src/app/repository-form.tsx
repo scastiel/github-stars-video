@@ -21,8 +21,14 @@ export function RepositoryForm({
       className="flex flex-col gap-2 w-full max-w-sm"
       onSubmit={(event) => {
         event.preventDefault()
-        plausible('Change repository', { props: { repository } })
-        router.push(`/?repository=${repository}`)
+        const cleanRepository = repository
+          .trim()
+          .replace(/^(https?:\/\/)?github.com\//, '')
+        plausible('Change repository', {
+          props: { repository: cleanRepository },
+        })
+        setRepository(cleanRepository)
+        router.push(`/?repository=${cleanRepository}`)
       }}
     >
       <Label htmlFor="repository">Repository</Label>
