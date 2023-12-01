@@ -59,7 +59,7 @@ function StarCount({
   )
 
   return (
-    <div className="text-right px-16 pb-16 text-[128px]">
+    <div className="text-right px-16 pb-16 text-[128px] text-black">
       <strong className="tabular-nums">
         {starsToDisplay.toLocaleString('en-US', { useGrouping: true })}
       </strong>
@@ -93,7 +93,7 @@ function RepositoryInformation({
   repository: string
 }) {
   return (
-    <div className="p-16 text-[72px] whitespace-nowrap overflow-hidden text-ellipsis">
+    <div className="p-16 text-[72px] whitespace-nowrap overflow-hidden text-ellipsis text-black">
       <span>
         <Img
           src={userAvatarUrl}

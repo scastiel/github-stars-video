@@ -15,12 +15,16 @@ type State =
   | { type: 'done'; renderId: string; bucketName: string }
   | { type: 'error' }
 
-export function GenerateButton({ inputProps }: { inputProps: Partial<Props> }) {
+export function GenerateButton({
+  inputProps,
+}: {
+  inputProps?: Partial<Props>
+}) {
   const [state, setState] = useState<State>({ type: 'initial' })
   const router = useRouter()
   const plausible = usePlausible()
 
-  if (state.type === 'done') {
+  if (inputProps && state.type === 'done') {
     return (
       <form action="/download" method="GET">
         <input type="hidden" name="renderId" value={state.renderId} />
@@ -38,6 +42,8 @@ export function GenerateButton({ inputProps }: { inputProps: Partial<Props> }) {
     <Button
       onClick={async () => {
         try {
+          if (!inputProps) return
+
           setState({ type: 'pending' })
           const { renderId, bucketName } = await generateVideo(inputProps)
           setState({ type: 'started', renderId, bucketName })
@@ -69,7 +75,9 @@ export function GenerateButton({ inputProps }: { inputProps: Partial<Props> }) {
           setState({ type: 'error' })
         }
       }}
-      disabled={state.type === 'pending' || state.type === 'started'}
+      disabled={
+        !inputProps || state.type === 'pending' || state.type === 'started'
+      }
     >
       {state.type === 'pending' || state.type === 'started' ? (
         <>

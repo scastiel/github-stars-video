@@ -1,3 +1,6 @@
+import { ThemeProvider } from '@/components/theme-provider'
+import { ThemeToggle } from '@/components/theme-toggle'
+import { Alert, AlertDescription } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
 import { env } from '@/lib/env'
 import { Code2, ExternalLink } from 'lucide-react'
@@ -35,54 +38,65 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <PlausibleProvider
         domain="scastiel.dev/github-stars"
         trackOutboundLinks
       />
       <body className="min-h-[100dvh] flex flex-col">
-        <header className="p-2 flex justify-end">
-          <Button variant="ghost" asChild>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <header className="p-2 flex justify-end">
+            <Button variant="ghost" asChild>
+              <a
+                href="https://github.com/scastiel/github-stars-video"
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                <ExternalLink className="w-4 h-4 mr-2" />
+                GitHub
+              </a>
+            </Button>
+            <ThemeToggle />
+          </header>
+          {children}
+          <div className="p-4 w-full max-w-md mx-auto">
             <a
-              href="https://github.com/scastiel/github-stars-video"
+              href="https://codebit.xyz?ref=github-stars"
               target="_blank"
               rel="noreferrer noopener"
             >
-              <ExternalLink className="w-4 h-4 mr-2" />
-              GitHub
+              <Alert>
+                <AlertDescription className="text-center">
+                  Would you like to create animated code videos?
+                  <br />
+                  Check out our project{' '}
+                  <strong>
+                    <Code2 className="inline w-4 h-4 -mt-0.5" /> CodeBit
+                  </strong>
+                </AlertDescription>
+              </Alert>
             </a>
-          </Button>
-        </header>
-        {children}
-        <div className="p-4 w-full max-w-md mx-auto">
-          <a
-            href="https://codebit.xyz?ref=github-stars"
-            target="_blank"
-            rel="noreferrer noopener"
-            className="block rounded p-4 text-sm text-center text-slate-600 [&_strong]:text-black mb-12 border bg-gradient-to-br from-slate-100 to-slate-200"
-          >
-            Would you like to create animated code videos?
-            <br />
-            Check out our project{' '}
-            <strong>
-              <Code2 className="inline w-4 h-4 -mt-0.5" /> CodeBit
-            </strong>
-          </a>
-        </div>
-        <footer className="p-2 text-center text-sm [&_a]:underline">
-          Created by{' '}
-          <a
-            href="https://scastiel.dev?ref=github-stars"
-            target="_blank"
-            rel="noreferrer noopener"
-          >
-            Sebastien Castiel
-          </a>
-          .<br />
-          <small className="text-slate-400">
-            Not endorsed or affiliated with GitHub.
-          </small>
-        </footer>
+          </div>
+          <footer className="p-2 text-center text-sm [&_a]:underline">
+            Created by{' '}
+            <a
+              href="https://scastiel.dev?ref=github-stars"
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              Sebastien Castiel
+            </a>
+            .<br />
+            <small className="text-slate-400">
+              Not endorsed or affiliated with GitHub.
+            </small>
+          </footer>
+        </ThemeProvider>
       </body>
     </html>
   )

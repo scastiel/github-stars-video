@@ -1,5 +1,4 @@
 import { CompositionPlayer } from '@/app/composition-player'
-import { GenerateButton } from '@/app/generate-button'
 import { RepositoryForm } from '@/app/repository-form'
 import { ResultCard } from '@/app/result-card'
 import {
@@ -66,12 +65,9 @@ async function RepositoryResult({ repository }: { repository: string }) {
           </CardContent>
         </ResultCard>
       ) : (
-        <>
-          <ResultCard>
-            <CompositionPlayer inputProps={inputProps} />
-          </ResultCard>
-          <GenerateButton inputProps={inputProps} />
-        </>
+        <ResultCard inputProps={inputProps}>
+          <CompositionPlayer inputProps={inputProps} />
+        </ResultCard>
       )}
     </>
   )
