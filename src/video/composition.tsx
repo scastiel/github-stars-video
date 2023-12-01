@@ -31,17 +31,17 @@ export function GitHubStarsComposition({
         repository={repository}
       />
       <UserAvatars stargazers={stargazers} />
-      <StarCount stars={stars} stargazers={stargazers} />
+      <StarCount stars={stars} />
     </AbsoluteFill>
   )
 }
 
 function StarCount({
   stars,
-  stargazers,
+  startFrom = 0,
 }: {
   stars: number
-  stargazers: Props['stargazers']
+  startFrom?: number
 }) {
   const frame = useCurrentFrame()
   const { fps } = useVideoConfig()
@@ -50,7 +50,7 @@ function StarCount({
     interpolate(
       frame,
       [0, animationDurationInSeconds * fps],
-      [stars - stargazers.length, stars],
+      [startFrom, stars],
       {
         extrapolateRight: 'clamp',
         easing: Easing.bezier(0.5, 1, 0.5, 1),
