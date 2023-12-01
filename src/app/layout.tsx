@@ -56,7 +56,7 @@ export default function RootLayout({
         {children}
         <div className="p-4 w-full max-w-md mx-auto">
           <a
-            href="https://codebit.xyz"
+            href="https://codebit.xyz?ref=github-stars"
             target="_blank"
             rel="noreferrer noopener"
             className="block rounded p-4 text-sm text-center text-slate-600 [&_strong]:text-black mb-12 border bg-gradient-to-br from-slate-100 to-slate-200"
@@ -72,7 +72,7 @@ export default function RootLayout({
         <footer className="p-2 text-center text-sm [&_a]:underline">
           Created by{' '}
           <a
-            href="https://scastiel.dev"
+            href="https://scastiel.dev?ref=github-stars"
             target="_blank"
             rel="noreferrer noopener"
           >
