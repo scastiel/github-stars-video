@@ -2,10 +2,18 @@ import { env } from '@/lib/env'
 import { Props } from '@/video/schema'
 import { Octokit } from '@octokit/rest'
 
+const fetchWithCache = (
+  input: RequestInfo | URL,
+  init?: RequestInit | undefined,
+) => fetch(input, { ...init, next: { revalidate: 5 * 60 } })
+const octokit = new Octokit({
+  auth: env.GITHUB_ACCESS_TOKEN,
+  request: { fetch: fetchWithCache },
+})
+
 export async function getGithubStarsInfo(
   repository: string,
 ): Promise<Partial<Props> | null> {
-  const octokit = new Octokit({ auth: env.GITHUB_ACCESS_TOKEN })
   const [user, repo] = repository.split('/')
   try {
     const {
